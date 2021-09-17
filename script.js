@@ -1,8 +1,6 @@
-var planter = document.getElementsByClassName("container")
 var currentDay = document.getElementById("currentDay")
 
-
-
+//This function takes the moment formats it then displays it in the currentDay
 function runTime(){
     var now = moment();
     var time = now.format("MMM Do, YYYY, h:mm:ssA")
@@ -12,6 +10,8 @@ function runTime(){
    
 }
 
+
+// setInterval refreshes the runTime function every second
 setInterval(runTime, 1000);
 runTime()
 buildCont()
@@ -19,9 +19,9 @@ buildCont()
 
 
 
-    
-    
+//this function will run as the page opens up
 function buildCont(){
+    //the times that i want to display
     var hourz = [ 
         {hour: "9AM"}, 
         {hour: "10AM"},
@@ -34,12 +34,16 @@ function buildCont(){
         {hour: "5PM"},
         {hour: "6PM"},
     ];
+    //set timez equal to hourz.length for my for loop
     timez = hourz.length
+    // i = 0; for everytime i is less than timez; i increase by 1
     for(var i = 0; i < timez; i++){
+        //create my row column and append it to the the main container using jQuery
         $("<div>", {
             id: "rowst" + i,
             class: "rowst"
         }).appendTo("#containa")
+        //followed the same proceedure to recreate my layout from the html
         $("<div>", {
             id: "timeBox" + i,
             class: "timeBox ends"
@@ -58,14 +62,16 @@ function buildCont(){
             id: "addBtn" + i,
             class: "btn"
         }).text("ADD").appendTo("#rowst" + i)
+        //add button with function on click setting index to just the numbers of the 
+        //array above then it cobines it with the taskInput and sends it to the local storage
         $("#addBtn" + i).click(function(e){
             var index = e.target.id.replace(/[^0-9]/g, "")
-            console.log(index)
             localStorage.setItem(index, $("#taskInput" + index).val())
+            
         })
     }
 
-
+//if theres a task in the localStorage this will grab it and display it
     function grabData(){
         for(var i = 0; i < 10; i++) {
             if(localStorage.getItem(i) !== null){
@@ -77,7 +83,7 @@ function buildCont(){
     }
     grabData()
 
-
+//this changes the colors of the rows wether its before after or currently the hour
     function colorChanger() {
         var currentHour = moment().format("HH")
         
@@ -93,10 +99,7 @@ function buildCont(){
     }
 
     colorChanger()
-    // if(hourz.length  > boxNum){
-    //     fullCont.after(fullCont)
-    //     boxNum++
-    // } 
+    
 
     
 }
